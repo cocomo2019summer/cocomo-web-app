@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.scss';
 import 'antd/dist/antd.css'
-import { Button, Select, Layout, Row, Col, Card } from 'antd';
+import { Button, Select, Layout, Row, Col, Card, Table, Input, Checkbox } from 'antd';
 
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -20,6 +20,87 @@ const Column = props => (
   </Col>
 )
 
+const SLOC = () =>
+{
+  const dataSource = [
+    {
+      key: '1',
+      sloc: 'sloc',
+    },
+    {
+      key: '2',
+      name: 'Reused',
+      age: 42,
+      address: '10 Downing Street',
+    },
+    {
+      key: '2',
+      name: 'Modified',
+      age: 42,
+      address: '10 Downing Street',
+    },
+  ];
+
+  const columns = [
+    {
+      title: '',
+      dataIndex: '',
+      key: '',
+    },
+    {
+      title: 'SLOC',
+      dataIndex: 'sloc',
+      key: 'sloc',
+      render: () => <Input />
+    },
+    {
+      title: '% Design Modified',
+      dataIndex: 'design_modified',
+      key: 'design_modified',
+      render: () => <Input />
+    },
+    {
+      title: '% Code Modified',
+      dataIndex: 'code_modified',
+      key: 'code_modified',
+      render: () => <Input />
+    },
+    {
+      title: '% Integration Required',
+      dataIndex: 'integration_required',
+      key: 'integration_required',
+      render: () => <Input />
+    },
+    {
+      title: 'Assessment and Assimilation (0% - 8%)',
+      dataIndex: 'assessment_and_assimilation',
+      key: 'assessment_and_assimilation',
+      render: () => <Input />
+    },
+    {
+      title: 'Software Understanding (0% - 50%)',
+      dataIndex: 'software_understanding',
+      key: 'software_understanding',
+      render: () => <Input />
+    },
+    {
+      title: 'Unfamiliarity',
+      dataIndex: 'unfamiliarity',
+      key: 'unfamiliarity',
+      render: () => <Input />
+    },
+  ];
+  return (
+    <Card title="Software Scale Drivers" style={cardStyle}>
+      <Select defaultValue="sloc" style={{ width: '200px' }}>
+        <Option value="sloc">Source Lines of Code</Option>
+        <Option value="fp">Function Points</Option>
+      </Select>
+      <Table dataSource={dataSource} columns={columns} pagination={false} />
+    </Card>
+  )
+}
+
 const DriverOptions = () => (
   <Select defaultValue="nom" style={{ width: selectWidth }}>
     <Option value="v_low">Very Low</Option>
@@ -29,6 +110,41 @@ const DriverOptions = () => (
     <Option value="v_high">Very High</Option>
     <Option value="e_high">Extra High</Option>
   </Select>
+)
+
+const Maintenance = () => (
+  <Card title="Maintenance" style={cardStyle}>
+    {/* <Checkbox>Maintenance</Checkbox> */}
+    <Row>
+      <Column>
+        <h5>Annual Change Size (ESLOC)</h5>
+        <Input style={{ width: selectWidth }} />
+      </Column>
+      <Column>
+        <h5>Software Understanding (0%-50%)</h5>
+        <Input style={{ width: selectWidth }} />
+      </Column>
+      <Column>
+        <h5>Maintenance Duration (Years)</h5>
+        <Input style={{ width: selectWidth }} />
+      </Column>
+      <Column>
+        <h5>Unfamiliarity (0-1)</h5>
+        <Input style={{ width: selectWidth }} />
+      </Column>
+    </Row>
+  </Card>
+)
+
+const Labor = () => (
+  <Card title="Software Labor Rates" style={cardStyle}>
+    <Row>
+      <Column>
+        <h5>Cost per Person-Month (Dollars)</h5>
+        <Input style={{ width: selectWidth }} />
+      </Column>
+    </Row>
+  </Card>
 )
 
 const SoftwareScaleDrivers = () => (
@@ -159,11 +275,14 @@ const App = () => (
   <Layout>
     <Header></Header>
     <Content className="container">
+      <SLOC />
       <SoftwareScaleDrivers />
       <SoftwareCostDriversProduct />
       <SoftwareCostDriversPersonnel />
       <SoftwareCostDriversPlatform />
       <SoftwareCostDriversProject />
+      <Maintenance />
+      <Labor />
     </Content>
     <Footer></Footer>
   </Layout>
